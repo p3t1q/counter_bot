@@ -85,10 +85,16 @@ def daily_counters() -> List[str]:
     return run_sql(conn.cursor(), query, (0,))
 
 
+def public_counters() -> List[str]:
+    query = "SELECT label from counters WHERE is_public = TRUE"
+    ret = run_sql(conn.cursor(), query)
+    return [counter[0] for counter in ret]
+
 @bot.command()
 async def citace(ctx):
-    counters = user_owned_counters(ctx.author.id)
-    message = "\n".join(f"{counter} = {get_current_counter_value(counter)}" for counter in counters)
+    public = public_counters()
+    counters = {user_owned_counters(ctx.author.id) + public}
+    message = "\n".join(f"{counter} = {get_current_counter_value(counter)}{' (public)' if counter in public else ''}" for counter in counters)
     if message:
         await ctx.reply(message)
     else:
