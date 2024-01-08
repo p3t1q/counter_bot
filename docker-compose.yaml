@@ -2,25 +2,26 @@ name: counter_bot
 services:
     counter_bot:
       environment:
-        - DISCORD_BOT_TOKEN=
+        - DISCORD_BOT_TOKEN=MTE5NDAxNDgwNTA4Njk4MjI0Ng.GZaZkE.tNpPLmfEW1IFOeT4HDcSbPaxWFwd1tDQfTG7e0
         - DB_HOST=counter_db
-        - DB_USERNAME=
-        - DB_PASSWORD=
+        - DB_USERNAME=postgres
+        - DB_PASSWORD=admin
         - DB_PORT=5432
         - DB_NAME=postgres
       container_name: counter_bot
       restart: always
       depends_on:
         - counter_db
-      image: 'counter_bot:latest'
+      build: './'
 
     counter_db:
       environment:
-        - POSTGRES_PASSWORD=
+        - POSTGRES_USERNAME=postgres
+        - POSTGRES_PASSWORD=admin
       container_name: counter_db
       restart: always
       ports:
         - 5444:5432
       volumes:
-        - /home/roland/services/increment_bot/db/data:/var/lib/postgresql/data
-      image: 'counter_db:latest'
+        - ./the_db_folder:/var/lib/postgresql/data
+      build: './db'
