@@ -60,7 +60,7 @@ def is_public(counter_name: str) -> bool:
 
 def update_counter_by_amount(author: int, counter_name: str, amount: int) -> bool:
     counter_id = get_counter_id(counter_name)
-    query = "INSERT INTO counter_updates (author, \"counter_id\", amount) VALUES (%s, %s, %s);"
+    query = "INSERT INTO counter_updates (author, \"counter_id\", amount) VALUES (%s, %s, %s); COMMIT;"
     try:
         run_sql(conn.cursor(), query, (author, counter_id, amount))
     except:
@@ -70,7 +70,7 @@ def update_counter_by_amount(author: int, counter_name: str, amount: int) -> boo
 
 
 def create_counter(user_owner: int, counter_name: str):
-    query = "INSERT INTO counters (author, label) VALUES (%s, %s);"
+    query = "INSERT INTO counters (author, label) VALUES (%s, %s); COMMIT;"
     run_sql(conn.cursor(), query, (user_owner, counter_name))
 
 
@@ -173,7 +173,7 @@ async def zverejnit(ctx, counter_name: str, is_public: bool):
         return
 
     counter_id = get_counter_id(counter_name)
-    query = f"UPDATE counters SET is_public={'TRUE' if is_public else 'FALSE'} WHERE id = %s;"
+    query = f"UPDATE counters SET is_public={'TRUE' if is_public else 'FALSE'} WHERE id = %s; COMMIT;"
     run_sql(conn.cursor(), query, (counter_id,))
 
     await ctx.reply(f"Counter \"{counter_name}\" is now {'public' if is_public else 'private'}")
@@ -203,7 +203,7 @@ async def denne(ctx, counter_name: str, amount: int):
         return
 
     counter_id = get_counter_id(counter_name)
-    query = "UPDATE counters SET daily=%s WHERE id = %s;"
+    query = "UPDATE counters SET daily=%s WHERE id = %s; COMMIT;"
     try:
         run_sql(conn.cursor(), query, (amount, counter_id))
     except:
