@@ -218,7 +218,7 @@ async def daily(ctx, counter_name: str, amount: int):
         await ctx.reply("Some error. Ask Roland to check the logs.")
         return False
 
-    await ctx.reply("Zveřejněn")
+    await ctx.reply(f"Daily updates set to {amount}")
     return True
 
 
