@@ -93,7 +93,7 @@ def public_counters() -> List[str]:
 @bot.command()
 async def citace(ctx):
     public = public_counters()
-    counters = {user_owned_counters(ctx.author.id) + public}
+    counters = set(user_owned_counters(ctx.author.id) + public)
     message = "\n".join(f"{counter} = {get_current_counter_value(counter)}{' (public)' if counter in public else ''}" for counter in counters)
     if message:
         await ctx.reply(message)
