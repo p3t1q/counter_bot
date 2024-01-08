@@ -217,6 +217,7 @@ async def denne(ctx, counter_name: str, amount: int):
 @bot.command()
 async def pomoc(ctx):
     help_message="""
+```
 /plus "jmeno" 1         -- Přičte hodnotu k čítači
 /minus "jmeno" 1        -- Odečte hodnotu z čítače
 /nastav "jmeno" 1       -- Nastaví hodnotu čítače
@@ -225,6 +226,7 @@ async def pomoc(ctx):
 /opravneni "jmeno"      -- Vypsat veřejnost čítače
 /zverejnit "jmeno" True -- Nastavit veřejnost čítače
 /denne "jmeno" 1        -- Denně aktaulizuje hodnotu čítače přičtením hodnoty
+```
 """
     await ctx.reply(help_message)
 
