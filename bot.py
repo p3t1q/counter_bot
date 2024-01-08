@@ -214,6 +214,20 @@ async def denne(ctx, counter_name: str, amount: int):
     return True
 
 
+@bot.command()
+async def pomoc(ctx):
+    help_message="""
+    /plus "jmeno" 1         -- Přičte hodnotu k čítači
+    /minus "jmeno" 1        -- Odečte hodnotu z čítače
+    /citac "jmeno"          -- Vypsat aktuální hodnotu čítače
+    /citace                 -- Vypsat všechny mnou dostupné čítače
+    /opravneni "jmeno"      -- Vypsat veřejnost čítače
+    /zverejnit "jmeno" True -- Nastavit veřejnost čítače
+    /denne "jmeno" 1        -- Denně aktaulizuje hodnotu čítače přičtením hodnoty
+    """
+    await ctx.reply(help_message)
+
+
 @tasks.loop(time=time(hour=0, tzinfo=ZoneInfo("Europe/Prague")))
 async def daily_increment():
     counters = daily_counters()
