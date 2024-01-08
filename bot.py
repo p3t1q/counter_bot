@@ -111,29 +111,15 @@ async def citac(ctx, counter_name: str):
 
     await ctx.reply(f"Counter \"{counter_name}\" doesn't exist.")
 
-
 @bot.command()
-async def citac_daily(ctx, counter_name: str):
-    counter_name = counter_name_normalization(counter_name)
-    if counter_exists(counter_name):
-        counter_id = get_counter_id(counter_name)
-        query = "SELECT daily FROM counters WHERE id = %s"
-        daily = run_sql(conn.cursor(), query, (counter_id,))[0][0]
-        await ctx.reply(f"{counter_name} daily = {daily}")
-        return
-
-    await ctx.reply(f"Counter \"{counter_name}\" doesn't exist.")
-
-
-@bot.command()
-async def citac_permissions(ctx, counter_name: str):
+async def opravneni(ctx, counter_name: str):
     counter_name = counter_name_normalization(counter_name)
     if counter_exists(counter_name):
         counter_id = get_counter_id(counter_name)
         query = "SELECT is_public FROM counters WHERE id = %s"
         permissions = run_sql(conn.cursor(), query, (counter_id,))[0][0]
         print(permissions)
-        await ctx.reply(f"{counter_name} = {'Public' if permissions else 'Private'}")
+        await ctx.reply(f"Counter \"{counter_name}\" is {'public' if permissions else 'private'}")
         return
 
     await ctx.reply(f"Counter \"{counter_name}\" doesn't exist.")
@@ -176,7 +162,7 @@ async def update_counter(ctx, counter_name: str, amount: int):
 
 
 @bot.command()
-async def public(ctx, counter_name: str, is_public: bool):
+async def zverejnit(ctx, counter_name: str, is_public: bool):
     counter_name = counter_name_normalization(counter_name)
     if not counter_exists(counter_name):
         await ctx.reply(f"Counter \"{counter_name}\" does not exist.")
@@ -190,11 +176,11 @@ async def public(ctx, counter_name: str, is_public: bool):
     query = f"UPDATE counters SET is_public={'TRUE' if is_public else 'FALSE'} WHERE id = %s;"
     run_sql(conn.cursor(), query, (counter_id,))
 
-    await ctx.reply(f"{counter_name} = {'Public' if is_public else 'Private'}")
+    await ctx.reply(f"Counter \"{counter_name}\" is now {'public' if is_public else 'private'}")
 
 
 @bot.command()
-async def set(ctx, counter_name: str, amount: int):
+async def nastav(ctx, counter_name: str, amount: int):
     if counter_exists(counter_name):
         update_counter_by_amount(bot.user.id, counter_name, -get_current_counter_value(counter_name_normalization(counter_name)))
     await update_counter(ctx, counter_name, amount)
@@ -211,7 +197,7 @@ async def minus(ctx, counter_name: str, amount: int):
 
 
 @bot.command()
-async def daily(ctx, counter_name: str, amount: int):
+async def denne(ctx, counter_name: str, amount: int):
     if not is_owner_of_counter(ctx.author.id, counter_name):
         await ctx.reply("Make your own. Dipshit.")
         return
