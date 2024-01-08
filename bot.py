@@ -215,8 +215,10 @@ async def daily(ctx, counter_name: str, amount: int):
     try:
         run_sql(conn.cursor(), query, (amount, counter_id))
     except:
+        await ctx.reply("Some error. Ask Roland to check the logs.")
         return False
 
+    await ctx.reply("Zveřejněn")
     return True
 
 
