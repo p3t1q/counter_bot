@@ -198,7 +198,7 @@ async def minus(ctx, counter_name: str, amount: int):
 
 @bot.command()
 async def denne(ctx, counter_name: str, amount: int):
-    if not is_owner_of_counter(ctx.author.id, counter_name):
+    if not (is_owner_of_counter(ctx.author.id, counter_name) or counter_name in public_counters()):
         await ctx.reply("Make your own. Dipshit.")
         return
 
