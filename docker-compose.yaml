@@ -4,7 +4,7 @@ services:
       environment:
         - DISCORD_BOT_TOKEN=
         - DB_HOST=counter_db
-        - DB_USERNAME=postgres
+        - DB_USERNAME=
         - DB_PASSWORD=
         - DB_PORT=5432
         - DB_NAME=postgres
