@@ -1,6 +1,6 @@
 -- SETTINGS
 ALTER DATABASE postgres
-SET TIMEZONE TO "Europe/Prague";
+SET TIMEZONE TO "UTC";
 
 -- TABLES
 -- author id 0 for self
