@@ -187,17 +187,17 @@ async def nastav(ctx, counter_name: str, amount: int):
 
 
 @bot.command()
-async def plus(ctx, counter_name: str, amount: int):
+async def plus(ctx, counter_name: str, amount: int = 1):
     await update_counter(ctx, counter_name, amount)
 
 
 @bot.command()
-async def minus(ctx, counter_name: str, amount: int):
+async def minus(ctx, counter_name: str, amount: int = 1):
     await update_counter(ctx, counter_name, -amount)
 
 
 @bot.command()
-async def denne(ctx, counter_name: str, amount: int):
+async def denne(ctx, counter_name: str, amount: int = 1):
     if not (is_owner_of_counter(ctx.author.id, counter_name) or counter_name in public_counters()):
         await ctx.reply("Make your own. Dipshit.")
         return
